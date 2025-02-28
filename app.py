@@ -297,17 +297,26 @@ elif "Threat Intelligence" in selected_page:
 
             # Create risk distribution visualization
             fig = go.Figure()
+            
+            # Create color map for risk levels
+            colors = []
+            color_map = {
+                'Very Low Risk': 'green',
+                'Low Risk': 'lightgreen',
+                'Moderate Risk': 'yellow',
+                'High Risk': 'orange',
+                'Critical Risk': 'red',
+                'Unknown': 'gray'
+            }
+            
+            # Apply colors based on risk level
+            for risk in risk_counts.index:
+                colors.append(color_map.get(risk, 'gray'))
+                
             fig.add_trace(go.Bar(
                 x=risk_counts.index,
                 y=risk_counts.values,
-                marker_color={
-                    'Very Low Risk': 'green',
-                    'Low Risk': 'lightgreen',
-                    'Moderate Risk': 'yellow',
-                    'High Risk': 'orange',
-                    'Critical Risk': 'red',
-                    'Unknown': 'gray'
-                }
+                marker_color=colors
             ))
 
             fig.update_layout(
@@ -415,7 +424,7 @@ else:  # About page
     - 📈 Historical Analysis
     - 📋 Detailed Reporting
 
-    Version: {config.version}
+    Version: {.Version: 1.0.0}
     """)
 
 # Force dark theme
