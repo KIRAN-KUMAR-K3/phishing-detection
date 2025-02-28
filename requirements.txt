@@ -3,6 +3,7 @@ streamlit
 pandas
 plotly
 python-dotenv
+python-whois
 # Core Python Libraries (Built-in, No Installation Needed)
 # datetime
 # json
