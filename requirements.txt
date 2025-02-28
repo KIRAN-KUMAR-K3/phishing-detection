@@ -25,4 +25,4 @@ whois
 dnspython
 ipaddress
 requests
-
+python-dotenv
