@@ -4,7 +4,7 @@ import numpy as np
 import ipaddress
 import tld
 from datetime import datetime
-import whois
+import whois as whois_module
 import dns.resolver
 import requests
 
@@ -68,13 +68,19 @@ class URLFeatureExtractor:
 
         # Try to get domain age
         try:
-            w = whois.whois(domain)
-            if w.creation_date:
+            w = whois_module.query(domain)
+            if w and hasattr(w, 'creation_date'):
                 creation_date = w.creation_date[0] if isinstance(w.creation_date, list) else w.creation_date
-                age = (datetime.now() - creation_date).days
-                features['domain_age_days'] = age
-        except:
-            pass
+                if isinstance(creation_date, datetime):
+                    age = (datetime.now() - creation_date).days
+                    features['domain_age_days'] = max(0, age)  # Ensure non-negative age
+                else:
+                    features['domain_age_days'] = -1  # Invalid date format
+            else:
+                features['domain_age_days'] = -1  # No creation date available
+        except Exception as e:
+            print(f"Error getting domain age for {domain}: {str(e)}")
+            features['domain_age_days'] = -1  # Error in whois lookup
 
         return features
 

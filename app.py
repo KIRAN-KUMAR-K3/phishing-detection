@@ -260,8 +260,11 @@ elif "URL Analysis" in selected_page:
                                 st.metric("SSL Certificate",
                                     "Valid" if result['features']['has_ssl_cert'] else "Invalid")
                             with metrics[2]:
-                                st.metric("Domain Age",
-                                    f"{result['features']['domain_age_days']} days")
+                                domain_age = result['features']['domain_age_days']
+                                if domain_age < 0:
+                                    st.metric("Domain Age", "Unknown (Unable to retrieve)")
+                                else:
+                                    st.metric("Domain Age", f"{domain_age} days")
 
                         with tabs[3]:
                             st.subheader("VirusTotal Results")
