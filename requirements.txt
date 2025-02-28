@@ -1,0 +1,28 @@
+# Streamlit Web App Dependencies
+streamlit
+pandas
+plotly
+
+# Core Python Libraries (Built-in, No Installation Needed)
+# datetime
+# json
+# os
+# time
+# base64
+# io
+# re
+
+# Machine Learning & Data Processing
+numpy
+scikit-learn
+joblib
+pickle-mixin
+
+# Web & URL Parsing
+urllib3
+tld
+whois
+dnspython
+ipaddress
+requests
+

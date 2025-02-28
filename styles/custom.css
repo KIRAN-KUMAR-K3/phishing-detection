@@ -1,0 +1,128 @@
+/* Custom styles for the phishing detection app */
+
+/* Main description */
+.main-description {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    margin: 1rem 0;
+    line-height: 1.6;
+}
+
+/* Status messages */
+.element-container .success {
+    background-color: rgba(0, 255, 0, 0.1) !important;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+}
+
+.element-container .error {
+    background-color: rgba(255, 0, 0, 0.1) !important;
+    border: 1px solid #ff0000;
+    color: #ff0000;
+}
+
+.element-container .warning {
+    background-color: rgba(255, 255, 0, 0.1) !important;
+    border: 1px solid #ffff00;
+    color: #ffff00;
+}
+
+/* Results container */
+.results-container {
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    background-color: #f8f9fa;
+    margin-top: 2rem;
+}
+
+/* Metric containers */
+.metric-container {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin: 0.5rem 0;
+    transition: all 0.3s ease;
+}
+
+.metric-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom chart styling */
+.plotly-chart-container {
+    background-color: rgba(255, 255, 255, 0.02);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+/* Tab styling */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 1rem;
+}
+
+.stTabs [data-baseweb="tab"] {
+    height: 3rem;
+    white-space: pre-wrap;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 0.5rem;
+    border: none;
+    color: #fafafa;
+    font-weight: 500;
+}
+
+.stTabs [data-baseweb="tab"]:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.stTabs [data-baseweb="tab-panel"] {
+    padding: 1rem 0;
+}
+
+/* Sidebar styling */
+[data-testid="stSidebar"] {
+    background-color: rgba(255, 255, 255, 0.02);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Input field styling */
+[data-testid="stTextInput"] input {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fafafa;
+}
+
+/* Button styling */
+.stButton button {
+    background-color: #FF4B4B;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.stButton button:hover {
+    background-color: #FF6B6B;
+    transform: translateY(-2px);
+}
+
+/* Expander styling */
+.streamlit-expanderHeader {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 0.5rem;
+    border: none;
+}
+
+/* Progress bar */
+.stProgress > div > div {
+    background-color: #FF4B4B;
+}
+
+/* Main container */
+.main {
+    padding: 2rem;
+}
