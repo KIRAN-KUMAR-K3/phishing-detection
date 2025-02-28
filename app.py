@@ -215,6 +215,10 @@ elif "URL Analysis" in selected_page:
             st.warning("Please enter a URL to analyze")
         else:
             with st.spinner("🔍 Performing comprehensive security analysis..."):
+                # Add http:// prefix if not present
+                if not url.startswith('http://') and not url.startswith('https://'):
+                    url = 'http://' + url
+                    
                 if not url_validator.is_valid_url(url):
                     st.error("⚠️ Invalid URL format. Please enter a valid URL")
                 else:

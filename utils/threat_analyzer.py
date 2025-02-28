@@ -5,7 +5,7 @@ from services.virustotal_service import VirusTotalService
 from utils.feature_extractor import URLFeatureExtractor
 from utils.model_handler import PhishingDetectionModel
 from datetime import datetime
-from typing import Dict, Tuple
+from typing import Dict, Tuple, List
 
 class ThreatAnalyzer:
     def __init__(self, virustotal_api_key: str):
@@ -26,6 +26,35 @@ class ThreatAnalyzer:
 
         # Combine results
         combined_risk = self._calculate_combined_risk(ml_result, vt_result)
+        
+        # Add risk factors based on detection reasons
+        risk_factors = []
+        
+        # Add VT detection as a risk factor
+        if vt_result['success'] and vt_result['detections'] > 0:
+            risk_factors.append(f"Detected by {vt_result['detections']} security vendors")
+            for category in vt_result['categories'][:3]:  # Limit to first 3 categories
+                risk_factors.append(f"Classified as: {category}")
+        
+        # Add ML model risk factors if confidence is high
+        if ml_result['confidence'] > 0.6:
+            risk_factors.append(f"Machine learning model detected suspicious patterns with {int(ml_result['confidence']*100)}% confidence")
+            
+            # Add specific feature-based risk factors
+            if feature_dict.get('suspicious_words_count', 0) > 2:
+                risk_factors.append(f"Contains {feature_dict.get('suspicious_words_count')} suspicious keywords")
+            
+            if feature_dict.get('url_length', 0) > 100:
+                risk_factors.append("Unusually long URL")
+                
+            if feature_dict.get('has_ip_address', False):
+                risk_factors.append("Uses IP address instead of domain name")
+                
+            if feature_dict.get('has_suspicious_tld', False):
+                risk_factors.append("Uses uncommon or suspicious top-level domain")
+        
+        # Add the risk factors to the combined risk assessment
+        combined_risk['risk_factors'] = risk_factors
         
         return {
             'timestamp': datetime.now().isoformat(),
@@ -65,10 +94,15 @@ class ThreatAnalyzer:
         else:
             risk_level = "Unknown Risk"
 
+        # Consider a URL malicious if either:
+        # 1. The combined score is above 0.5 OR
+        # 2. VirusTotal has at least 1 detection
+        is_malicious = combined_score > 0.5 or (vt_result['success'] and vt_result['detections'] > 0)
+        
         return {
             'combined_score': combined_score,
             'risk_level': risk_level,
             'ml_confidence': ml_confidence,
             'vt_detection_rate': vt_detection_rate,
-            'is_malicious': combined_score > 0.5
+            'is_malicious': is_malicious
         }
